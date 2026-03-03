@@ -1,0 +1,84 @@
+# Dart/Flutter
+
+## Dart
+.dart_tool/
+.packages
+build/
+pubspec.lock
+
+## Flutter
+.flutter-plugins
+.flutter-plugins-dependencies
+.fvm/
+
+## Generated files
+*.g.dart
+*.freezed.dart
+*.mocks.dart
+*.config.dart
+*.gr.dart
+
+# IDE
+
+## Android Studio / IntelliJ
+.idea/
+*.iml
+*.ipr
+*.iws
+
+## VS Code
+.vscode/
+
+## Emacs
+*~
+\#*\#
+
+# OS
+
+## macOS
+.DS_Store
+*.swp
+
+## Windows
+Thumbs.db
+desktop.ini
+
+## Linux
+*~
+
+# Android
+**/android/**/gradle-wrapper.jar
+**/android/.gradle/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# iOS / macOS
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/DerivedData/
+**/ios/**/.symlinks/
+**/ios/**/Flutter/App.framework
+**/ios/**/Flutter/Flutter.framework
+**/ios/**/Flutter/Flutter.podspec
+**/ios/**/Flutter/Generated.xcconfig
+**/ios/**/Flutter/ephemeral/
+**/ios/**/Flutter/flutter_export_environment.sh
+**/ios/**/ServiceDefinitions.json
+**/ios/**/Pods/
+**/ios/Runner.xcworkspace
+**/macos/Flutter/ephemeral/
+
+# Web
+**/web/dart_worker.js
+
+# Exceptions
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
