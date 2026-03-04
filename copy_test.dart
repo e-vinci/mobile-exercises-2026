@@ -4,15 +4,9 @@ import 'dart:io';
 /// to tutorial folders in the whotesthetests directory
 void main() async {
   final workspaceRoot = Directory.current;
-  final whotesthetestsDir = Directory('${workspaceRoot.path}/whotesthetests');
   final centralTestDir = Directory('${workspaceRoot.path}/test');
 
-  print('Checking for tutorial folders in whotesthetests...');
-
-  if (!whotesthetestsDir.existsSync()) {
-    print('❌ whotesthetests directory not found!');
-    return;
-  }
+  print('Checking for tutorial folders in root...');
 
   if (!centralTestDir.existsSync()) {
     print('❌ Central test directory not found!');
@@ -20,14 +14,14 @@ void main() async {
   }
 
   // Get all tutorial directories from whotesthetests
-  final tutorialDirs = whotesthetestsDir
+  final tutorialDirs = workspaceRoot
       .listSync()
       .whereType<Directory>()
       .where((dir) => dir.path.contains('tuto'))
       .toList();
 
   if (tutorialDirs.isEmpty) {
-    print('❌ No tutorial directories found in whotesthetests');
+    print('❌ No tutorial directories found in root');
     return;
   }
 
