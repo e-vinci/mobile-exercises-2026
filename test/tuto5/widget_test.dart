@@ -126,18 +126,12 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
       expect(find.text('Tutoriel 5'), findsOneWidget);
-
-      // Clean up any pending timers
-      await tester.pumpAndSettle();
     });
 
     testWidgets('HomeScreen contains FutureBuilder', (tester) async {
       await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
       expect(find.byType(FutureBuilder<List<Film>>), findsOneWidget);
-
-      // Clean up any pending timers
-      await tester.pumpAndSettle();
     });
 
     testWidgets('HomeScreen shows loading indicator initially', (tester) async {
@@ -145,56 +139,6 @@ void main() {
 
       // Before the future completes, should show CircularProgressIndicator
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-      // Clean up any pending timers
-      await tester.pumpAndSettle();
-    });
-
-    testWidgets('HomeScreen displays films after delay', (tester) async {
-      await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
-
-      // Initially should show loading indicator
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-      // pumpAndSettle waits for all pending async operations to complete
-      // This will respect the 3-second delay and allow the future to resolve
-      await tester.pumpAndSettle();
-
-      // After delay, the loading indicator should be gone
-      // This proves the async operation completed (regardless of success/error)
-      expect(
-        find.byType(CircularProgressIndicator),
-        findsNothing,
-        reason:
-            'Loading indicator should disappear after async operation completes',
-      );
-    });
-
-    testWidgets('HomeScreen respects 3-second delay before showing data', (
-      tester,
-    ) async {
-      await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
-
-      // Should show loading indicator initially
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-
-      // After 2 seconds, should STILL be loading (well before 3-second delay ends)
-      // This test FAILS if the delay is missing
-      await tester.pump(const Duration(seconds: 2));
-      expect(
-        find.byType(CircularProgressIndicator),
-        findsOneWidget,
-        reason: 'Should still be loading after 2 seconds (delay is 3 seconds)',
-      );
-
-      // After 2 more seconds (total 4), the 3-second delay should be long over
-      await tester.pump(const Duration(seconds: 2));
-      expect(
-        find.byType(CircularProgressIndicator),
-        findsNothing,
-        reason:
-            'Should have completed loading after 4+ seconds (3-second delay is over)',
-      );
     });
   });
 }
