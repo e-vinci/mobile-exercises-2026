@@ -1,104 +1,75 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import '../lib/models/mural.dart';
 
-import '../lib/views/home_screen.dart';
-import '../lib/views/location_dialog.dart';
-
-/// =============================================================================
-/// TUTO 7 - VALIDATION TESTS
-/// These tests validate that the tutorial has been completed correctly.
-/// Run with: flutter test
-/// =============================================================================
+// ---------------------------------------------------------------------------
+// Mural model
+// ---------------------------------------------------------------------------
 
 void main() {
-  group('T07.1 - HomeScreen Widget', () {
-    testWidgets('HomeScreen displays title', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(home: HomeScreen()),
+  group('Mural model', () {
+    test('can be instantiated with all required fields', () {
+      const mural = Mural(
+        name: 'Lucky Luke',
+        artist: 'Morris',
+        address: 'Rue de la Buanderie 13',
+        latitude: 50.845,
+        longitude: 4.351,
+        year: '1991',
+        publisher: 'Dupuis',
+        surfaceM2: '25',
+        comicRouteLink: 'https://parcours.bd',
+        imageUrl: 'https://example.com/lucky.jpg',
       );
 
-      expect(find.text('Tutoriel 7'), findsOneWidget);
+      expect(mural.name, equals('Lucky Luke'));
+      expect(mural.artist, equals('Morris'));
+      expect(mural.address, equals('Rue de la Buanderie 13'));
+      expect(mural.latitude, equals(50.845));
+      expect(mural.longitude, equals(4.351));
     });
 
-    testWidgets('HomeScreen displays platform information', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(home: HomeScreen()),
-      );
+    test('fromJson parses all fields correctly', () {
+      final json = {
+        'nom_de_la_fresque': 'Lucky Luke',
+        'dessinateur': 'Morris',
+        'adresse_fr': 'Rue de la Buanderie 13',
+        'geo_point': {'lat': 50.845, 'lon': 4.351},
+        'date': '1991',
+        'maison_d_edition': 'Dupuis',
+        'surface_m2': 25,
+        'lien_site_parcours_bd': 'https://parcours.bd',
+        'image': {'url': 'https://example.com/lucky.jpg'},
+      };
 
-      // Should display "Hello from <platform>!"
-      expect(find.textContaining('Hello from'), findsOneWidget);
+      final mural = Mural.fromJson(json);
+
+      expect(mural.name, equals('Lucky Luke'));
+      expect(mural.artist, equals('Morris'));
+      expect(mural.address, equals('Rue de la Buanderie 13'));
+      expect(mural.latitude, equals(50.845));
+      expect(mural.longitude, equals(4.351));
+      expect(mural.year, equals('1991'));
+      expect(mural.publisher, equals('Dupuis'));
+      expect(mural.surfaceM2, equals('25'));
+      expect(mural.imageUrl, equals('https://example.com/lucky.jpg'));
     });
 
-    testWidgets('HomeScreen has "Retrieve location" button', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(home: HomeScreen()),
-      );
+    test('fromJson uses defaults for null fields', () {
+      final json = {
+        'geo_point': {'lat': 50.845, 'lon': 4.351},
+      };
 
-      expect(find.text('Retrieve location'), findsOneWidget);
-    });
+      final mural = Mural.fromJson(json);
 
-    testWidgets('HomeScreen contains ElevatedButton widgets', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(home: HomeScreen()),
-      );
-
-      expect(find.byType(ElevatedButton), findsWidgets);
-    });
-  });
-
-  group('T07.2 - LocationDialog Widget', () {
-    testWidgets('LocationDialog is a StatefulWidget', (tester) async {
-      const widget = LocationDialog();
-      expect(widget, isA<StatefulWidget>());
-    });
-
-    testWidgets('LocationDialog displays title "Your location"', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: LocationDialog(),
-          ),
-        ),
-      );
-
-      expect(find.text('Your location'), findsOneWidget);
-    });
-
-    testWidgets('LocationDialog shows latitude and longitude labels', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: LocationDialog(),
-          ),
-        ),
-      );
-
-      expect(find.textContaining('Latitude'), findsOneWidget);
-      expect(find.textContaining('Longitude'), findsOneWidget);
-    });
-
-    testWidgets('LocationDialog has Dismiss button', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: LocationDialog(),
-          ),
-        ),
-      );
-
-      expect(find.text('Dismiss'), findsOneWidget);
-    });
-
-    testWidgets('LocationDialog is an AlertDialog', (tester) async {
-      await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: LocationDialog(),
-          ),
-        ),
-      );
-
-      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(mural.name, equals('Fresque inconnue'));
+      expect(mural.artist, equals('Auteur inconnu'));
+      expect(mural.address, equals('Adresse inconnue'));
+      expect(mural.year, equals('Année inconnue'));
+      expect(mural.publisher, equals('Éditeur inconnu'));
+      expect(mural.surfaceM2, equals('0'));
+      expect(mural.comicRouteLink, equals(''));
+      expect(mural.imageUrl, equals(''));
     });
   });
 }
+a
